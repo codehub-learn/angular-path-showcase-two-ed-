@@ -1,0 +1,18 @@
+<div class="mw-100 container" id="generalContainer">
+  <div class="row">
+    <div class="col-12">
+      <ul>
+        <li><a [routerLink]="['/user', 1]">User 1</a></li>
+        <li><a [routerLink]="['/user', 2]">User 2</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h2>User List</h2>...
+      {{ users | async | json}}
+    </div>
+  </div>
+</div>
+
+
