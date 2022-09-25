@@ -13,6 +13,7 @@ import {DataService} from "./services/data.service";
 import {FooterComponent} from "./core/footer/footer.component";
 import {HeaderComponent} from "./core/header/header.component";
 import { UserRegistrationComponent } from './modules/user-registration/user-registration.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserRegistrationComponent } from './modules/user-registration/user-regi
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

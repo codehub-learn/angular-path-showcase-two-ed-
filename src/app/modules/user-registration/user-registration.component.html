@@ -4,4 +4,108 @@
       <h1>User Registration</h1>
     </div>
   </div>
+  <form class="userForm" [formGroup]="userRegistrationForm" (ngSubmit)="onSubmit()">
+    <div class="row" formGroupName="fullname">
+      <div class="col-6">
+        <input type="text" class="form-control" placeholder="First name" formControlName="first_name">
+      </div>
+      <div class="col-6">
+        <input type="text" class="form-control" placeholder="Last name" formControlName="last_name">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <input type="text" class="form-control" placeholder="Email" formControlName="email">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <input type="file" class="form-control" placeholder="Avatar" formControlName="avatar">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <select id="location" class="form-select" formControlName="region">
+          <option selected>Choose a region...</option>
+          <option>Attica</option>
+          <option>Central Greece</option>
+          <option>Central Macedonia</option>
+          <option>Crete</option>
+          <option>Eastern Macedonia and Thrace</option>
+          <option>Epirus</option>
+          <option>Ionian Islands</option>
+          <option>North Aegean</option>
+          <option>Peloponnese</option>
+          <option>South Aegean</option>
+          <option>Thessaly</option>
+          <option>Western Greece</option>
+          <option>Western Macedonia</option>
+          <option>Mount Athos</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="male" value="male" formControlName="gender">
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="female" value="female"
+                 formControlName="gender">
+          <label class="form-check-label" for="male">Female</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="other" value="other" formControlName="gender">
+          <label class="form-check-label" for="male">Other</label>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="receiveEmails" formControlName="receiveEmails">
+          <label class="form-check-label" for="receiveEmails">Receive Emails</label>
+        </div>
+      </div>
+    </div>
+    <span formArrayName="telephoneNumbers" *ngFor="let telephoneNumber of telephoneNumbers.controls; let i=index">
+      <br>
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Telephone Number" [formControlName]="i">
+        </div>
+        <div class="col-2" *ngIf="i > 0">
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeTelephoneNumber(i)">
+            Remove telephone number
+          </button>
+        </div>
+      </div>
+    </span>
+    <br>
+    <div class="row">
+      <div class="col-10">
+      </div>
+      <div class="col-2">
+        <button type="button" class="btn btn-outline-success" (click)="addTelephoneNumber()">
+          Add telephone number
+        </button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-10">
+      </div>
+      <div class="col-2">
+        <button type="submit" class="btn btn-primary registerButton">
+          Register
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
