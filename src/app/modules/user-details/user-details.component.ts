@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DataService} from "../../services/data.service";
+import {User} from "../../shared/domain/user";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-details',
@@ -9,45 +11,27 @@ import {DataService} from "../../services/data.service";
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private service:DataService,
-    private router:Router) { }
+  user: User;
 
-  id:any;
-  response: any;
-  show: any;
-
-  ngOnInit(): void {
-
-    // get id and then the data
-    this.route.params.subscribe({
-      next: par => this.id = par['id']
-    });
-
-    this.response = this.service.getById(this.id)
-
-
-    // get queries...
-    this.show = this.route.queryParams;
-
-
-    // fake -- simulation of routes
-    this.route.params.subscribe({
-      next: par => {
-        if(par){
-          this.id = par['id'];
-
-          if (this.id == 0){
-            this.router.navigateByUrl('/')
-          } else if (this.id == 100) {
-            this.router.navigate(['page'])
-          }
-
-        }
-      }
-
-    });
-
-
+  constructor(private activeRoute: ActivatedRoute, private dataService: DataService, private router: Router,
+              private location: Location) {
+    this.user = new User(0, "", "", "", "");
   }
 
+  ngOnInit(): void {
+    this.activeRoute.params.subscribe((params) => {
+      let id = params["id"];
+      if(id <= 0){
+        this.router.navigate(["404"]);
+      } else {
+        this.dataService.getById(id).subscribe((user) => {
+          this.user = user;
+        });
+      }
+    });
+  }
+
+  redirectToPreviousPage() {
+    this.location.back();
+  }
 }

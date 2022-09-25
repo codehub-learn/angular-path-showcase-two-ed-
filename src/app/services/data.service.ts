@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
+import {User} from "../shared/domain/user";
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,23 @@ export class DataService {
 
   constructor(private http:HttpClient) { }
 
-  get(){
-    return this.http.get(this.baseUrl);
+  get(): Observable<User[]>{
+    return this.http.get<any>(this.baseUrl).pipe(
+      map((response) => {
+        let users : User[] = [];
+        response.data.forEach((user: User) => users.push(user));
+        return users;
+      })
+    );
   }
 
-  getById(id:number){
-    return this.http.get(this.baseUrl + '/' + id);
+  getById(id:number): Observable<User>{
+    return this.http.get<any>(this.baseUrl + "/" + id).pipe(
+      map((response) => {
+        let data = response.data;
+        return  new User(data.id, data.email, data.first_name, data.last_name, data.avatar);
+      })
+    );
   }
 
 }
