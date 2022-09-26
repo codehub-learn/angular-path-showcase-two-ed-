@@ -14,6 +14,7 @@ import {FooterComponent} from "./core/footer/footer.component";
 import {HeaderComponent} from "./core/header/header.component";
 import { UserRegistrationComponent } from './modules/user-registration/user-registration.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RxReactiveFormsModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

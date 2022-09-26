@@ -7,44 +7,63 @@
   <form class="userForm" [formGroup]="userRegistrationForm" (ngSubmit)="onSubmit()">
     <div class="row" formGroupName="fullname">
       <div class="col-6">
-        <input type="text" class="form-control" placeholder="First name" formControlName="first_name">
+        <input type="text" class="form-control" placeholder="First name*" formControlName="first_name">
+        <!--<div *ngIf="first_name.invalid" class="alert alert-danger form-error">
+          Field Invalid
+        </div>-->
+        <div *ngIf="first_name.hasError('required') && first_name.touched" class="alert alert-danger form-error">
+          Field Required
+        </div>
+        <div *ngIf="first_name.hasError('pattern') && first_name.touched" class="alert alert-danger form-error">
+          No numbers or special characters allowed
+        </div>
       </div>
       <div class="col-6">
-        <input type="text" class="form-control" placeholder="Last name" formControlName="last_name">
+        <input type="text" class="form-control" placeholder="Last name*" formControlName="last_name">
+        <div *ngIf="last_name.hasError('required') && last_name.touched" class="alert alert-danger form-error">
+          Field Required
+        </div>
+        <div *ngIf="last_name.hasError('pattern') && last_name.touched" class="alert alert-danger form-error">
+          No numbers or special characters allowed
+        </div>
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col-12">
-        <input type="text" class="form-control" placeholder="Email" formControlName="email">
+        <input type="text" class="form-control" placeholder="Email*" formControlName="email">
+        <div *ngIf="email.hasError('required') && email.touched" class="alert alert-danger form-error">
+          Field Required
+        </div>
+        <div *ngIf="email.hasError('email') && email.touched" class="alert alert-danger form-error">
+          Email Required
+        </div>
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col-12">
-        <input type="file" class="form-control" placeholder="Avatar" formControlName="avatar">
+        <input type="file" class="form-control" placeholder="Avatar*" formControlName="avatar">
+        <div *ngIf="avatar.hasError('required') && avatar.touched" class="alert alert-danger form-error">
+          Field Required
+        </div>
+        <div *ngIf="avatar.hasError('extension') && avatar.touched" class="alert alert-danger form-error">
+          File should a PNG or JPG
+        </div>
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col-12">
         <select id="location" class="form-select" formControlName="region">
-          <option selected>Choose a region...</option>
-          <option>Attica</option>
-          <option>Central Greece</option>
-          <option>Central Macedonia</option>
-          <option>Crete</option>
-          <option>Eastern Macedonia and Thrace</option>
-          <option>Epirus</option>
-          <option>Ionian Islands</option>
-          <option>North Aegean</option>
-          <option>Peloponnese</option>
-          <option>South Aegean</option>
-          <option>Thessaly</option>
-          <option>Western Greece</option>
-          <option>Western Macedonia</option>
-          <option>Mount Athos</option>
+          <option *ngFor="let region of regions">{{region}}</option>
         </select>
+        <div *ngIf="region.hasError('required') && region.touched" class="alert alert-danger form-error">
+          Field Required
+        </div>
+        <div *ngIf="region.hasError('regionProperValue') && region.touched" class="alert alert-danger form-error">
+          Please select a proper region
+        </div>
       </div>
     </div>
     <br>
@@ -61,7 +80,10 @@
         </div>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="gender" id="other" value="other" formControlName="gender">
-          <label class="form-check-label" for="male">Other</label>
+          <label class="form-check-label" for="male">Other*</label>
+        </div>
+        <div *ngIf="gender.hasError('required') && gender.touched" class="alert alert-danger form-error">
+          Field Required
         </div>
       </div>
     </div>
@@ -78,12 +100,25 @@
       <br>
       <div class="row">
         <div class="col">
-          <input type="text" class="form-control" placeholder="Telephone Number" [formControlName]="i">
+          <input type="text" class="form-control" placeholder="Telephone Number*" formControlName="{{i}}">
         </div>
         <div class="col-2" *ngIf="i > 0">
           <button type="button" class="btn btn-danger btn-sm" (click)="removeTelephoneNumber(i)">
             Remove telephone number
           </button>
+        </div>
+        <div *ngIf="telephoneNumberAt(i).hasError('required') && telephoneNumberAt(i).touched"
+             class="alert alert-danger form-error">
+          Field Required
+        </div>
+        <div *ngIf="(telephoneNumberAt(i).hasError('minlength')
+        || telephoneNumberAt(i).hasError('maxlength'))
+        && telephoneNumberAt(i).touched" class="alert alert-danger form-error">
+          Length should be exactly 7
+        </div>
+        <div *ngIf="telephoneNumberAt(i).hasError('pattern')
+        && telephoneNumberAt(i).touched" class="alert alert-danger form-error">
+          Not a number
         </div>
       </div>
     </span>
@@ -102,6 +137,9 @@
       <div class="col-10">
       </div>
       <div class="col-2">
+        <button type="button" class="btn btn-outline-info infoButton" (click)="setExampleValues()">
+          Example
+        </button>
         <button type="submit" class="btn btn-primary registerButton">
           Register
         </button>

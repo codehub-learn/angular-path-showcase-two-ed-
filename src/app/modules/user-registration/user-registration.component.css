@@ -5,3 +5,7 @@
 .registerButton {
   float: right;
 }
+
+.form-error {
+  text-align: center;
+}
