@@ -1,1 +1,16 @@
-<p>users works!</p>
+<table class="table">
+  <thead>
+  <tr>
+    <th>First</th>
+    <th>Last</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users">
+    <th>{{user.first_name}}</th>
+    <td>{{user.last_name}}</td>
+    <td><button (click)="showUserDetails(user.id)">View Details</button></td>
+  </tr>
+  </tbody>
+</table>
